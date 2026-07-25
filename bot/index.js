@@ -39,6 +39,7 @@ async function searchVault(query) {
 
     // Fetch each file and search locally
     const searchTerms = query.toLowerCase().split(/\s+/);
+    console.log('🔎 Search terms:', searchTerms);
     const matches = [];
 
     for (const file of mdFiles) {
@@ -55,6 +56,7 @@ async function searchVault(query) {
       const matchCount = searchTerms.filter(term => contentLower.includes(term)).length;
 
       if (matchCount > 0) {
+        console.log(`   ✅ ${file.path}: ${matchCount}/${searchTerms.length} terms matched`);
         matches.push({
           path: file.path,
           content: fileContent.data,
@@ -66,6 +68,10 @@ async function searchVault(query) {
     // Return top 3 matches sorted by score
     const topMatches = matches.sort((a, b) => b.score - a.score).slice(0, 3);
     console.log('📊 Matched', topMatches.length, 'files');
+
+    if (topMatches.length === 0) {
+      console.log('⚠️ No files matched search terms. Checked', mdFiles.length, 'total files');
+    }
 
     return topMatches;
   } catch (error) {
