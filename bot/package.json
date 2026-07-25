@@ -1,0 +1,20 @@
+{
+  "name": "cc-slack-bot",
+  "version": "1.0.0",
+  "description": "Slack bot for C+C brand knowledge assistant",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@slack/bolt": "^3.17.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
