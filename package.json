@@ -1,0 +1,9 @@
+{
+  "name": "cc-brain",
+  "version": "1.0.0",
+  "description": "CC Brain Slack bot",
+  "private": true,
+  "scripts": {
+    "start": "cd bot && npm start"
+  }
+}
