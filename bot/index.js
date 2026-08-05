@@ -220,10 +220,36 @@ app.message(async ({ event, client, logger }) => {
 });
 
 /**
+ * Error handlers for Socket Mode stability
+ */
+app.error(async (error) => {
+  console.error('❌ App error:', error.message);
+  console.error('   Stack:', error.stack);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('❌ Uncaught exception:', error.message);
+  console.error('   Stack:', error.stack);
+  console.log('⚠️  Process will exit in 5 seconds to trigger Railway restart');
+  setTimeout(() => process.exit(1), 5000);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled rejection at:', promise, 'reason:', reason);
+});
+
+/**
  * Start the app
  */
 (async () => {
-  await app.start();
-  console.log('⚡️ Socket Mode bot is running!');
-  console.log('🔗 Connected to Slack via WebSocket');
+  try {
+    await app.start();
+    console.log('⚡️ Socket Mode bot is running!');
+    console.log('🔗 Connected to Slack via WebSocket');
+  } catch (error) {
+    console.error('❌ Failed to start app:', error.message);
+    process.exit(1);
+  }
 })();
